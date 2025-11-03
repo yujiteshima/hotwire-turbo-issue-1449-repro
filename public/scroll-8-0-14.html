@@ -5,11 +5,14 @@
     <title>Scroll Reset Repro (Turbo 8.0.14)</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-refresh-scroll" content="reset">
-    <script type="module" src="https://cdn.skypack.dev/@hotwired/turbo@8.0.14"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.14/dist/turbo.es2017-esm.js"></script>
     <style>
-      body { font-family: sans-serif; line-height: 1.6; }
+      body { font-family: sans-serif; line-height: 1.6; margin: 0; padding-top: 120px; }
+      nav { position: fixed; top: 0; left: 0; right: 0; background: white; padding: 16px; border-bottom: 2px solid #ccc; z-index: 1000; }
       .spacer { height: 2000px; background: linear-gradient(#fafafa, #eee); margin: 16px 0; }
       a { margin-right: 12px; }
+      h1 { margin: 16px; }
+      p { margin: 16px; }
     </style>
   </head>
   <body>
