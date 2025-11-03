@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scroll Reset Repro (Turbo 8.0.14)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-refresh-scroll" content="reset">
+    <script type="module" src="https://cdn.skypack.dev/@hotwired/turbo@8.0.14"></script>
+    <style>
+      body { font-family: sans-serif; line-height: 1.6; }
+      .spacer { height: 2000px; background: linear-gradient(#fafafa, #eee); margin: 16px 0; }
+      a { margin-right: 12px; }
+    </style>
+  </head>
+  <body>
+    <h1>#1449 Repro: turbo-refresh-scroll reset vs HTTP status</h1>
+    <p>Scroll down, then click a link. The next page should scroll to the top.</p>
+    <nav>
+      <a id="to200" href="/scroll/ok">200 OK</a>
+      <a id="to302" href="/scroll/302">302 → 200</a>
+      <a id="to404" href="/scroll/404">404</a>
+      <a id="to500" href="/scroll/500">500</a>
+    </nav>
+    <div class="spacer"></div>
+    <p>Bottom area</p>
+  </body>
+</html>
