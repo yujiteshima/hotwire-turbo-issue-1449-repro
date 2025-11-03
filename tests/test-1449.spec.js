@@ -47,4 +47,20 @@ test.describe('#1449 turbo-refresh-scroll reset vs HTTP status (Turbo 8.0.14)', 
     const y = await afterClickScrollY(page, '#to302');
     expect(y).toBeGreaterThan(50);
   });
+
+  test('302→404 keeps scroll (bug)', async ({ page }) => {
+    await page.goto('/scroll_8_0_14');
+    const before = await scrollDown(page, 1400);
+    expect(before).toBeGreaterThan(200);
+    const y = await afterClickScrollY(page, '#to302to404');
+    expect(y).toBeGreaterThan(50);
+  });
+
+  test('302→500 keeps scroll (bug)', async ({ page }) => {
+    await page.goto('/scroll_8_0_14');
+    const before = await scrollDown(page, 1400);
+    expect(before).toBeGreaterThan(200);
+    const y = await afterClickScrollY(page, '#to302to500');
+    expect(y).toBeGreaterThan(50);
+  });
 });

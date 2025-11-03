@@ -39,6 +39,8 @@ p { margin: 16px; }
 <a id="to302" href="/scroll/302">302 → 200</a>
 <a id="to404" href="/scroll/404">404</a>
 <a id="to500" href="/scroll/500">500</a>
+<a id="to302to404" href="/scroll/302to404">302 → 404</a>
+<a id="to302to500" href="/scroll/302to500">302 → 500</a>
 </nav>
 <div class="spacer"></div>
 <p>Bottom area (scroll reset worked if you don't see this initially)</p>
@@ -66,6 +68,8 @@ p { margin: 16px; }
 <a id="to302" href="/scroll/302">302 → 200</a>
 <a id="to404" href="/scroll/404">404</a>
 <a id="to500" href="/scroll/500">500</a>
+<a id="to302to404" href="/scroll/302to404">302 → 404</a>
+<a id="to302to500" href="/scroll/302to500">302 → 500</a>
 </nav>
 <div class="spacer"></div>
 <p>Bottom area (scroll reset worked if you don't see this initially)</p>
@@ -93,6 +97,8 @@ p { margin: 16px; }
 <a id="to302" href="/scroll/302">302 → 200</a>
 <a id="to404" href="/scroll/404">404</a>
 <a id="to500" href="/scroll/500">500</a>
+<a id="to302to404" href="/scroll/302to404">302 → 404</a>
+<a id="to302to500" href="/scroll/302to500">302 → 500</a>
 </nav>
 <div class="spacer"></div>
 <p>Bottom area (scroll reset worked if you don't see this initially)</p>
@@ -100,6 +106,10 @@ p { margin: 16px; }
 });
 
 app.get('/scroll/302', (req, res) => res.redirect(302, '/scroll/ok'));
+
+app.get('/scroll/302to404', (req, res) => res.redirect(302, '/scroll/404'));
+
+app.get('/scroll/302to500', (req, res) => res.redirect(302, '/scroll/500'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
