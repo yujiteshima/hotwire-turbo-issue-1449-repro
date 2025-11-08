@@ -16,9 +16,16 @@
     </style>
   </head>
   <body>
+    <div style="background: #ef4444; color: white; padding: 8px 16px; margin-bottom: 16px; font-weight: bold;">
+      ❌ BROKEN VERSION (Turbo 8.0.14) - Scroll reset fails on error responses
+    </div>
     <h1>#1449 Repro: turbo-refresh-scroll reset vs HTTP status</h1>
+    <p style="background: #f0f0f0; padding: 12px 16px; margin: 16px; border-left: 4px solid #ef4444;">
+      <strong>Compare:</strong> <strong>Before (Broken - you are here)</strong> | <a href="/scroll_fixed" data-turbo="false">After (Fixed) →</a>
+    </p>
     <p>Scroll down, then click a link. The next page should scroll to the top.</p>
     <nav>
+      <strong>Test links:</strong>
       <a id="to200" href="/scroll/ok">200 OK</a>
       <a id="to302" href="/scroll/302">302 → 200</a>
       <a id="to404" href="/scroll/404">404</a>

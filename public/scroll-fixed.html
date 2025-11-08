@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scroll Reset FIXED (PR #1462)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-refresh-scroll" content="reset">
+    <script type="module" src="/turbo-fixed.js"></script>
+    <style>
+      body { font-family: sans-serif; line-height: 1.6; margin: 0; padding-top: 120px; }
+      nav { position: fixed; top: 0; left: 0; right: 0; background: white; padding: 16px; border-bottom: 2px solid #ccc; z-index: 1000; }
+      .banner { background: #22c55e; color: white; padding: 8px 16px; margin-bottom: 16px; font-weight: bold; }
+      .spacer { height: 2000px; background: linear-gradient(#e0ffe0, #c0ffc0); margin: 16px 0; }
+      a { margin-right: 12px; }
+      h1 { margin: 16px; }
+      p { margin: 16px; }
+      .comparison { background: #f0f0f0; padding: 12px 16px; margin: 16px; border-left: 4px solid #22c55e; }
+    </style>
+  </head>
+  <body>
+    <div class="banner">✅ FIXED VERSION (PR #1462) - Scroll reset now works on error responses!</div>
+    <h1>#1449 FIXED: turbo-refresh-scroll reset vs HTTP status</h1>
+    <div class="comparison">
+      <strong>Compare:</strong>
+      <a href="/scroll_8_0_14" data-turbo="false">Before (Broken)</a> |
+      <strong>After (Fixed - you are here)</strong>
+    </div>
+    <p>Scroll down, then click a link. The next page should scroll to the top (including 404/500 errors!).</p>
+    <nav>
+      <strong>Test links:</strong>
+      <a id="to200" href="/scroll/ok-fixed">200 OK</a>
+      <a id="to302" href="/scroll/302-fixed">302 → 200</a>
+      <a id="to404" href="/scroll/404-fixed">404</a>
+      <a id="to500" href="/scroll/500-fixed">500</a>
+      <a id="to302to404" href="/scroll/302to404-fixed">302 → 404</a>
+      <a id="to302to500" href="/scroll/302to500-fixed">302 → 500</a>
+    </nav>
+    <div class="spacer"></div>
+    <p>Bottom area (you should NOT see this after clicking a link - scroll should reset to top)</p>
+  </body>
+</html>

@@ -2,12 +2,29 @@
 
 This repository reproduces the bug described in [hotwired/turbo#1449](https://github.com/hotwired/turbo/issues/1449), where `turbo-refresh-scroll="reset"` only works with 2XX status codes and fails with non-2XX responses (3XX, 4XX, 5XX).
 
+**Fix available:** See [PR #1462](https://github.com/hotwired/turbo/pull/1462)
+
 ## The Bug
 
 The `<meta name="turbo-refresh-scroll" content="reset">` tag should reset scroll position to the top when navigating to a new page, regardless of HTTP status code. However, it currently only works with 2XX responses.
 
 **Expected behavior:** Scroll reset works for all HTTP status codes
 **Actual behavior:** Scroll reset only works for 2XX status codes
+
+## Try the Fix!
+
+This repo now includes both the broken and fixed versions for comparison:
+
+- **Broken (Turbo 8.0.14):** http://localhost:3000/scroll_8_0_14
+- **Fixed (PR #1462):** http://localhost:3000/scroll_fixed
+
+### How to Test
+
+1. Open either version
+2. Scroll to the bottom of the page
+3. Click "404" or "500" link
+4. **Broken version:** Page stays scrolled down (bug)
+5. **Fixed version:** Page scrolls to top (fixed!)
 
 ## Setup
 
