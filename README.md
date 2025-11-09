@@ -1,30 +1,60 @@
 # Hotwire Turbo Issue #1449 Reproduction
 
-This repository reproduces the bug described in [hotwired/turbo#1449](https://github.com/hotwired/turbo/issues/1449), where `turbo-refresh-scroll="reset"` only works with 2XX status codes and fails with non-2XX responses (3XX, 4XX, 5XX).
+This repository reproduces the bug described in [hotwired/turbo#1449](https://github.com/hotwired/turbo/issues/1449), where scroll position wasn't reset when navigating to error pages (404, 500).
 
-**Fix available:** See [PR #1462](https://github.com/hotwired/turbo/pull/1462)
+**✅ Fix included:** This repo includes the fix from [PR #1462](https://github.com/hotwired/turbo/pull/1462)
 
-## The Bug
+**Status:** The fix uses `performScroll()` to ensure scroll behavior is handled consistently for all response types (2XX and non-2XX)
 
-The `<meta name="turbo-refresh-scroll" content="reset">` tag should reset scroll position to the top when navigating to a new page, regardless of HTTP status code. However, it currently only works with 2XX responses.
+## The Bug (Original Issue)
 
-**Expected behavior:** Scroll reset works for all HTTP status codes
-**Actual behavior:** Scroll reset only works for 2XX status codes
+When navigating to error pages (404, 500) via link clicks, the scroll position wasn't reset to the top, even though the page was scrolled down.
+
+**Expected behavior:** Scroll position resets to top when navigating to error pages
+**Actual behavior (before fix):** Scroll position remained unchanged, making error messages invisible without manual scrolling
+
+**Root cause:** `performScroll()` wasn't being called for error responses in the visit.js implementation
 
 ## Try the Fix!
 
-This repo now includes both the broken and fixed versions for comparison:
+This repo includes both the broken and fixed versions for comparison:
 
 - **Broken (Turbo 8.0.14):** http://localhost:3000/scroll_8_0_14
-- **Fixed (PR #1462):** http://localhost:3000/scroll_fixed
+- **Fixed (Latest from PR #1462):** http://localhost:3000/scroll_fixed
 
 ### How to Test
 
 1. Open either version
 2. Scroll to the bottom of the page
 3. Click "404" or "500" link
-4. **Broken version:** Page stays scrolled down (bug)
-5. **Fixed version:** Page scrolls to top (fixed!)
+4. **Broken version:** Page stays scrolled down (bug) ❌
+5. **Fixed version:** Page scrolls to top (fixed!) ✅
+
+### The Fix
+
+The fix is simple and elegant - just call `performScroll()` after rendering error responses:
+
+```javascript
+// Before (manual scroll handling)
+const currentSnapshot = this.view.snapshot
+const preserveScroll = currentSnapshot.refreshScroll === "preserve"
+const scrollPosition = preserveScroll ? { x: window.scrollX, y: window.scrollY } : null
+
+await this.view.renderError(PageSnapshot.fromHTMLString(responseHTML), this)
+
+if (preserveScroll && scrollPosition) {
+  this.view.scrollToPosition(scrollPosition)
+} else if (!this.scrollToAnchor()) {
+  this.view.scrollToTop()
+}
+this.scrolled = true
+
+// After (use performScroll)
+await this.view.renderError(PageSnapshot.fromHTMLString(responseHTML), this)
+this.performScroll()
+```
+
+This ensures scroll behavior is handled consistently with successful responses.
 
 ## Setup
 
